@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0a0a0b">
 <meta name="color-scheme" content="dark">
 <title>Aswan Nutribites</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a0a0b;--s1:#131316;--s2:#1b1b20;--ln:#26262d;--p:#7c4dff;--pl:#b39bff;--tx:#f2f2f4;--mu:#8a8a96;color-scheme:dark;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -16,11 +16,43 @@ button,input,select,textarea{font-family:inherit;color:inherit}
 button{cursor:pointer}
 .ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .wrap{max-width:1080px;margin:auto;padding:0 16px}
-#splash{position:fixed;inset:0;z-index:90;background:var(--bg);display:grid;place-items:center;font-size:34px;font-weight:700;transition:opacity .5s,visibility .5s}
-#splash i{color:var(--p);font-style:normal}
-#splash.hide{opacity:0;visibility:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(500px 320px at 85% -5%,rgba(124,77,255,.22),transparent 70%),radial-gradient(420px 300px at 0% 40%,rgba(124,77,255,.10),transparent 70%)}
+#splash{position:fixed;inset:0;z-index:90;direction:ltr;background:radial-gradient(circle at 50% 42%,#1d1340,#0a0a0b 66%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;overflow:hidden;cursor:pointer;clip-path:circle(150% at 50% 42%);transition:clip-path .9s cubic-bezier(.7,0,.2,1),visibility 0s .9s}
+#splash.hide{clip-path:circle(0 at 50% 42%);visibility:hidden}
+.em{position:relative;width:210px;height:210px;display:grid;place-items:center;margin-top:-40px}
+.ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke:var(--p);stroke-width:1.5;stroke-dasharray:578;stroke-dashoffset:578;animation:dr 1.8s .2s forwards cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 0 6px var(--p))}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orbit{position:absolute;inset:0;animation:spin 16s linear infinite}
+.orbit i{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px;border-radius:50%;background:#15112c;border:1px solid #3d3185;display:grid;place-items:center;color:var(--pl);transform:rotate(var(--a)) translateY(-105px) rotate(calc(-1*var(--a)));opacity:0;animation:pi .6s calc(.9s + var(--k)*.13s) forwards}
+.orbit i svg{width:20px;height:20px;animation:spin 16s linear infinite reverse}
+@keyframes pi{from{opacity:0;scale:.2}to{opacity:1;scale:1}}
+.core{width:96px;height:96px;border-radius:30px;background:linear-gradient(135deg,#8f66ff,#5a2fd6);display:grid;place-items:center;color:#fff;box-shadow:0 0 60px rgba(124,77,255,.65),inset 0 1px 0 rgba(255,255,255,.3);animation:cp 1s .3s backwards cubic-bezier(.3,1.5,.5,1)}
+.core svg{width:50px;height:50px;stroke-width:1.5}
+@keyframes cp{from{transform:scale(0) rotate(-45deg)}}
+.bn{text-align:center}.bn>div{overflow:hidden;padding:2px 0}
+.bn b{display:block;font:700 42px/1.1 Sora,sans-serif;letter-spacing:7px;margin-right:-7px;animation:up .9s 1.2s backwards cubic-bezier(.2,.9,.3,1)}
+.bn small{display:block;font:600 13px Sora,sans-serif;letter-spacing:9px;margin-right:-9px;color:var(--pl);animation:up .9s 1.4s backwards cubic-bezier(.2,.9,.3,1)}
+@keyframes up{from{transform:translateY(110%)}}
+.tag{font-size:14px;color:#b6aee0;animation:fi .8s 1.9s backwards}
+@keyframes fi{from{opacity:0}}
+.skip{position:absolute;top:calc(18px + env(safe-area-inset-top,0px));right:18px;font-size:12px;color:var(--mu);animation:fi .6s 1s backwards}
+.nile{position:absolute;bottom:0;left:0;right:0;height:120px;overflow:hidden;pointer-events:none}
+.nile svg{position:absolute;left:0;width:200%;height:90px;fill:rgba(124,77,255,.28);animation:wv 6s linear infinite,rs 2.8s .2s backwards ease-out;bottom:-30px}
+.nile svg+svg{fill:rgba(179,155,255,.16);bottom:-44px;animation-duration:9s,3.2s;animation-direction:reverse,normal}
+@keyframes wv{to{transform:translateX(-50%)}}
+@keyframes rs{from{bottom:-120px}}
+/* hero */
+.hero{position:relative;margin-top:10px;padding:20px 18px;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#2a1a5e,#15102e 60%,var(--s1));border:1px solid #33286a;animation:in .6s .1s backwards}
+.hero::after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(100deg,transparent,rgba(255,255,255,.12),transparent);transform:skewX(-18deg);animation:sweep 4s 1.5s infinite}
+@keyframes sweep{to{left:120%}}
+.hero h1{margin:0 0 4px;font-size:20px;font-weight:700}
+.hero p{margin:0;font-size:13.5px;color:#c9bff0}
+.hero .ic{position:absolute;left:14px;bottom:-14px;width:96px;height:96px;stroke-width:1;color:rgba(179,155,255,.28);animation:fl 5s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translateY(-8px) rotate(8deg)}}
 /* header */
-header{position:sticky;top:0;z-index:20;background:var(--bg);padding:12px 0 10px}
+header{position:sticky;top:0;z-index:20;background:rgba(10,10,11,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:12px 0 10px}
 .hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .brand{font-size:24px;font-weight:700;letter-spacing:-.3px}
 .brand i{color:var(--p);font-style:normal}
@@ -100,8 +132,30 @@ input:focus,select:focus,textarea:focus{border-color:var(--p)}
 #toast.show{transform:translate(-50%,0)}
 .sk{aspect-ratio:1/1;border-radius:18px;background:linear-gradient(90deg,var(--s1),var(--s2),var(--s1));background-size:200% 100%;animation:sh 1.2s linear infinite}
 @keyframes sh{to{background-position:-200% 0}}
-#splash{direction:ltr;font-size:30px;letter-spacing:-.4px}
+@media(hover:hover){.card:hover .im{border-color:var(--p);transform:translateY(-3px);box-shadow:0 10px 28px rgba(124,77,255,.25)}.btn:hover{filter:brightness(1.12)}.cartb:hover{border-color:var(--p)}}
+.im{transition:transform .3s,border-color .3s,box-shadow .3s}.im img{transition:transform .5s}.card:hover .im img{transform:scale(1.07)}
+.cat.on i{box-shadow:0 0 0 4px rgba(124,77,255,.22),0 6px 18px rgba(124,77,255,.45)}
+.btn{background:linear-gradient(135deg,var(--p),#6236e0);box-shadow:0 6px 18px rgba(124,77,255,.3)}.btn.g,.btn.d{box-shadow:none;background:var(--s2)}.btn.d{background:#3a1520}
+.btn:disabled{pointer-events:none}
+.bar,.ctl{background:linear-gradient(135deg,var(--p),#6236e0)}
+.bar.on{animation:glow 2.2s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 8px 34px rgba(124,77,255,.6)}}
+.badge.on{animation:bd .4s}@keyframes bd{50%{transform:scale(1.35)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
+
 .brand{direction:ltr}
+
+.brand{display:flex;align-items:center;gap:10px;font:700 19px Sora,sans-serif;letter-spacing:-.2px}
+.lg{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#8f66ff,#5a2fd6);display:grid;place-items:center;color:#fff;box-shadow:0 4px 14px rgba(124,77,255,.45)}.lg .ic{width:20px;height:20px}
+header{border-bottom:1px solid rgba(255,255,255,.05)}
+.hero{padding:22px 20px 24px;border-radius:24px}.hero h1{font-size:23px;margin-bottom:6px}.hero p{max-width:75%;line-height:1.7}
+.sh h2{font-size:20px;position:relative;padding-right:14px}.sh h2::before{content:"";position:absolute;right:0;top:5px;bottom:5px;width:4px;border-radius:4px;background:var(--p)}
+.card{background:var(--s1);border:1px solid var(--ln);border-radius:22px;overflow:hidden;padding-bottom:12px;transition:transform .3s,border-color .3s,box-shadow .3s}
+.card .im{border:0;border-radius:0;box-shadow:none!important;transform:none!important}
+.card .nm{margin:12px 14px 0}.card .ct{margin:3px 14px 0}.card .pr{display:inline-block;margin:8px 14px 0;padding:3px 11px;border-radius:20px;background:rgba(124,77,255,.15);color:var(--pl);font-size:13px}
+@media(hover:hover){.card:hover{transform:translateY(-4px);border-color:#4b3a9c;box-shadow:0 14px 34px rgba(124,77,255,.22)}}
+.cat i{background:linear-gradient(160deg,var(--s2),var(--s1))}
+.ctl{backdrop-filter:blur(6px)}
 </style>
 </head>
 <body>
@@ -115,20 +169,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--p)}
 <symbol id="i-snack" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r=".8"/><circle cx="15" cy="10" r=".8"/><circle cx="10" cy="15" r=".8"/><circle cx="15" cy="15" r=".8"/></symbol>
 <symbol id="i-sweet" viewBox="0 0 24 24"><rect x="7" y="8" width="10" height="8" rx="4"/><path d="M7 12H3l1.5-2M7 12H3l1.5 2M17 12h4l-1.5-2M17 12h4l-1.5 2"/></symbol>
 <symbol id="i-drink" viewBox="0 0 24 24"><path d="M6 3h12l-1.5 17a2 2 0 0 1-2 1.8h-5a2 2 0 0 1-2-1.8L6 3z"/><path d="M6.5 9h11"/></symbol>
+<symbol id="i-farm" viewBox="0 0 24 24"><path d="M12 22v-9"/><path d="M12 13C7 13 4.5 10 4.5 5.5 9.5 5.5 12 8.5 12 13z"/><path d="M12 16c4.5 0 7-2.5 7-6.5-4.5 0-7 2.5-7 6.5z"/><path d="M5 22h14"/></symbol>
 <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></symbol>
 <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
 <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
 </defs></svg>
 
-<div id="splash"><div>Aswan Nutribites<i>.</i></div></div>
+<div id="splash"><div class="skip">اضغط للتخطي</div><div class="em"><svg class="ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="92"/></svg><div class="orbit" id="orb"></div><div class="core"><svg class="ic"><use href="#i-farm"/></svg></div></div><div class="bn"><div><b>ASWAN</b></div><div><small>NUTRIBITES</small></div></div><div class="tag">من أسوان لبيتك</div><div class="nile"><svg viewBox="0 0 800 90" preserveAspectRatio="none"><path d="M0 40q50-30 100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0V90H0z"/></svg><svg viewBox="0 0 800 90" preserveAspectRatio="none"><path d="M0 40q50-30 100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0V90H0z"/></svg></div></div>
 
 <header><div class="wrap">
-  <div class="hd"><div class="brand">Aswan Nutribites<i>.</i></div>
+  <div class="hd"><div class="brand"><span class="lg"><svg class="ic"><use href="#i-farm"/></svg></span>Aswan Nutribites<i>.</i></div>
     <button class="cartb" id="cartB" aria-label="السلة"><svg class="ic"><use href="#i-bag"/></svg><span class="badge" id="badge">0</span></button></div>
   <div class="sw"><svg class="ic"><use href="#i-search"/></svg><input id="q" placeholder="ابحث عن منتج" autocomplete="off" enterkeyhint="search"></div>
 </div></header>
 
 <main class="wrap">
+  <div class="hero"><h1>من أسوان لبيتك</h1><p>منتجات غذائية طبيعية وأساسيات يومك — اطلب بسهولة عبر واتساب</p><svg class="ic"><use href="#i-farm"/></svg></div>
   <div class="cats" id="cats"></div>
   <div class="sh"><h2 id="ttl">كل المنتجات</h2><span id="cnt"></span></div>
   <div class="grid" id="grid"></div>
@@ -168,7 +224,7 @@ var CFG={apiKey:"AIzaSyCoTesh3i-Jw-TPSEZLE3cWDFKFYEm1EZE",authDomain:"aswan-50d4
 var PASS="asmaa1122"; /* كلمة سر لوحة الإدارة — غيّرها من هنا */
 /* =============================================================== */
 var USE_FB=!!CFG.apiKey, FB=null, loaded=!USE_FB;
-var CATS=[['all','الكل'],['basic','أساسيات'],['canned','معلبات'],['frozen','مجمدات'],['oil','زيوت وتوابل'],['snack','سناكس'],['sweet','حلويات'],['drink','مشروبات']];
+var CATS=[['all','الكل'],['basic','أساسيات'],['farm','زراعة'],['canned','معلبات'],['frozen','مجمدات'],['oil','زيوت وتوابل'],['snack','سناكس'],['sweet','حلويات'],['drink','مشروبات']];
 var products=USE_FB?[]:load('kh_products',[]), phone=USE_FB?'000000000000':load('kh_phone','000000000000'), cat='all', cart={};
 function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){toast('المساحة ممتلئة')}}
@@ -177,9 +233,13 @@ function ic(n){return '<svg class="ic"><use href="#i-'+n+'"/></svg>'}
 function cname(c){for(var i=0;i<CATS.length;i++)if(CATS[i][0]===c)return CATS[i][1];return ''}
 function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 function byId(id){return products.filter(function(p){return p.id==id})[0]}
-function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2000)}
-function denied(e){toast(/permission/i.test(String(e&&(e.code||'')+(e&&e.message||'')))?'تعذر الحفظ — تحقق من قواعد قاعدة البيانات':'حدث خطأ، حاول مرة أخرى')}
-setTimeout(function(){$('splash').classList.add('hide')},1100);
+function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('show')},3200)}
+function denied(e){console.error(e);var m=String(e&&(e.code||'')+' '+(e&&e.message||''));
+  toast(/permission/i.test(m)?'تعذر الحفظ — القواعد غير منشورة في Firebase (Publish)':/network|offline|unavailable/i.test(m)?'لا يوجد اتصال بالإنترنت':'خطأ: '+(e&&(e.code||e.message)||'غير معروف'))}
+(function(){var K=['basic','oil','canned','drink','sweet','snack'],h='';K.forEach(function(n,k){h+='<i style="--a:'+k*60+'deg;--k:'+k+'">'+ic(n)+'</i>'});$('orb').innerHTML=h;
+var sp=$('splash'),seen=false;try{seen=sessionStorage.getItem('seen')}catch(e){}
+function end(){sp.classList.add('hide');try{sessionStorage.setItem('seen',1)}catch(e){}}
+sp.onclick=end;setTimeout(end,seen?500:3600)})();
 
 /* ---------- البيانات ---------- */
 function initFB(){
@@ -285,16 +345,16 @@ function shrink(file,cb){
   r.onload=function(){var im=new Image();im.onload=function(){
     var s=Math.min(1,500/Math.max(im.width,im.height)),c=document.createElement('canvas');
     c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);
-    cb(c.toDataURL('image/jpeg',0.72))};im.src=r.result};
+    cb(c.toDataURL('image/jpeg',0.72))};im.onerror=function(){toast('الصورة غير مدعومة')};im.src=r.result};
   r.readAsDataURL(file);
 }
 $('aAdd').onclick=function(){
   var n=$('aName').value.trim();if(!n){toast('اكتب اسم المنتج');return}
-  var btn=this;btn.disabled=true;btn.style.opacity=.6;
+  var btn=this;btn.disabled=true;btn.style.opacity=.6;btn.textContent='جارٍ الحفظ…';
   function add(img){
     addProduct({name:n,cat:$('aCat').value,price:$('aPrice').value.trim(),img:img||''}).then(function(){
       $('aName').value='';$('aPrice').value='';$('aImg').value='';toast('تمت الإضافة');
-    }).catch(denied).then(function(){btn.disabled=false;btn.style.opacity=1});
+    }).catch(denied).then(function(){btn.disabled=false;btn.style.opacity=1;btn.textContent='إضافة المنتج'});
   }
   var f=$('aImg').files[0];f?shrink(f,add):add('');
 };
